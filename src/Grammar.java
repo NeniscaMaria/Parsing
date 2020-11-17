@@ -7,7 +7,6 @@ public class Grammar {
     private List<String> nonTerminals;
     private Set<String> terminals;
     private List<Production> productions;
-    private String startingSymbol;
 
     public Grammar() {
         nonTerminals = new LinkedList<>();
@@ -23,17 +22,14 @@ public class Grammar {
                 if (i <=1){
                     String[] tokens = line.split(" ");
                     for (int j = 0; j < tokens.length; j++) {
-                        if (i == 0) {
+                        if (i == 0)
                             nonTerminals.add(tokens[j]);
-                        }
-                        if (i == 1) {
+                        if (i == 1)
                             terminals.add(tokens[j]);
-                        }
-
                     }
                 }
 
-                if (i > 2) {
+                if (i >= 2) {
                     String[] tokens = line.split(" - ");
                     List<List<String>> rules = new ArrayList<>();
 
@@ -80,10 +76,6 @@ public class Grammar {
 
     public List<Production> getProductions() {
         return productions;
-    }
-
-    public String getStartingSymbol() {
-        return startingSymbol;
     }
 
     public String toString() {

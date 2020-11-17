@@ -18,5 +18,7 @@ public class Main {
 
     public static void main(String[] args) {
         treeCheck();
+        Grammar grammar = new Grammar();
+        System.out.println(grammar);
     }
 }
