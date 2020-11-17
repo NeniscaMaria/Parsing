@@ -20,7 +20,7 @@ public class Grammar {
         try {
             int i = 0;
             for (String line : Files.readAllLines(Paths.get("g1.txt"))) {
-                if (i <= 2){
+                if (i <=1){
                     String[] tokens = line.split(" ");
                     for (int j = 0; j < tokens.length; j++) {
                         if (i == 0) {
@@ -28,9 +28,6 @@ public class Grammar {
                         }
                         if (i == 1) {
                             terminals.add(tokens[j]);
-                        }
-                        if (i == 2) {
-                            startingSymbol = tokens[j];
                         }
 
                     }
@@ -91,7 +88,7 @@ public class Grammar {
 
     public String toString() {
         return "G =( " + nonTerminals.toString() + ", " + terminals.toString() + ", " +
-                productions.toString() + ", " + startingSymbol + " )";
+                productions.toString() + ") ";
 
     }
 }
