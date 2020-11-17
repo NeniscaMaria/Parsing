@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b2ded880-0247-459c-a7a7-783d1692acf3" name="Default Changelist" comment="Grammar">
-      <change afterPath="$PROJECT_DIR$/src/Production.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Grammar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Grammar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Production.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Production.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +78,14 @@
       <updated>1605624503669</updated>
       <workItem from="1605624508072" duration="5411000" />
     </task>
+    <task id="LOCAL-00001" summary="Grammar">
+      <created>1605631436925</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1605631436925</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

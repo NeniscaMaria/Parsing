@@ -17,6 +17,7 @@ public class Production {
         return start;
     }
 
+
     public String toString() {
         StringBuilder sb = new StringBuilder(start + " - ");
         for (List<String> rule : rules) {
