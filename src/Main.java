@@ -14,6 +14,8 @@ public class Main {
         System.out.println(tree.getLeaves(tree.getRoot()));
     }
 
+
+
     public static void main(String[] args) {
         treeCheck();
     }
