@@ -111,10 +111,7 @@ public class Tree {
                 t = t.getNext();
                 i++;
             }
-            if (t == null)
-                return null;
-            else
-                return (t);
+            return (t);
         }
         getKthChild(root.getChild(), P, childNo);
         getKthChild(root.getNext(), P, childNo);
