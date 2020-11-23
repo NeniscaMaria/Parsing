@@ -8,18 +8,12 @@ public class Parser {
     //lr(0)
     private Grammar grammar;
     private Set<Set<State>> states;
-    //parsing steps
-    //1.define item
-    //LR(0) item: [A -> a.B]
-    //2.construct set of states
-    //closure, goto and colcan
-    //3.construct table
-
 
     public Parser(Grammar grammar) {
         this.grammar = grammar;
         //generation of states is done only once at the beginning
-        collectionCanonical();
+        if(!collectionCanonical())
+            System.out.println("This grammar is not LR(0)");
     }
 
     //what a state contains
@@ -68,7 +62,7 @@ public class Parser {
         });
         return result.get();
     }
-    
+
     //construct set of states
     private boolean collectionCanonical(){
         Set<State> firstState = getFirstState();
