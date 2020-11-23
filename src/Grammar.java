@@ -2,30 +2,34 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Grammar {
     private List<String> nonTerminals;
     private Set<String> terminals;
     private List<Production> productions;
+    private String filename;
 
-    public Grammar() {
+    public Grammar(String filename) {
         nonTerminals = new LinkedList<>();
         terminals = new HashSet<>();
         productions = new ArrayList<>();
+        this.filename = filename;
         getGrammarFromFile();
     }
 
     private void getGrammarFromFile() {
         try {
             int i = 0;
-            for (String line : Files.readAllLines(Paths.get("g1.txt"))) {
-                if (i <=1){
+            for (String line : Files.readAllLines(Paths.get(this.filename))) {
+                if (i < 2){
                     String[] tokens = line.split(" ");
-                    for (int j = 0; j < tokens.length; j++) {
+                    for (String token : tokens) {
                         if (i == 0)
-                            nonTerminals.add(tokens[j]);
+                            nonTerminals.add(token);
                         if (i == 1)
-                            terminals.add(tokens[j]);
+                            terminals.add(token);
                     }
                 }
 

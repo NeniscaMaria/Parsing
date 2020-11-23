@@ -26,12 +26,14 @@ public class Main {
     }
     public static void main(String[] args) {
         treeCheck();
-        Grammar grammar = new Grammar();
+        Grammar grammar = new Grammar("g2.txt");
+        Parser parser = new Parser(grammar);
         boolean finsihed = false;
         Scanner console = new Scanner(System.in);
         while(!finsihed){
             showMenu();
             System.out.println(">>");
+
             int choice = console.nextInt();
             switch (choice){
                 case 0:
