@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Parser {
     //lr(0)
@@ -57,15 +58,28 @@ public class Parser {
         return ss;
     }
 
+    private boolean checkLR0(Set<State> s){
+        Set<String> last = new HashSet<>();
+        AtomicBoolean result = new AtomicBoolean(true);
+        s.forEach(ss->{
+            if(ss.getRhs().indexOf(".") == ss.getRhs().size())
+                if(!last.add(ss.getRhs().get(ss.getRhs().size()-1)))
+                    result.set(false);
+        });
+        return result.get();
+    }
+    
     //construct set of states
-    private void collectionCanonical(){
+    private boolean collectionCanonical(){
         Set<State> firstState = getFirstState();
         states = new HashSet<>();
         states.add(closure(firstState));
         int noStates;
+        boolean isLR0 = true;
         do{
             noStates = states.size();
             for(Set<State> s : states){
+                isLR0 = checkLR0(s);
                 for(State a : s){
                     List<String> rhs = a.getRhs();
                     int indexOfDot = rhs.indexOf(".");
@@ -76,7 +90,8 @@ public class Parser {
                     }
                 }
             }
-        }while(noStates != states.size());
+        }while(noStates != states.size() && isLR0);
+        return isLR0;
     }
 
 }
