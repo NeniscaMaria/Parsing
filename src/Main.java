@@ -25,7 +25,7 @@ public class Main {
         System.out.println("0.Exit");
     }
     public static void main(String[] args) {
-        treeCheck();
+        //treeCheck();
         Grammar grammar = new Grammar("g2.txt");
         Parser parser = new Parser(grammar);
         boolean finsihed = false;

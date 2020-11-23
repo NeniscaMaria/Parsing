@@ -2,18 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b2ded880-0247-459c-a7a7-783d1692acf3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/State.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/g1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/g1.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/g2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/g2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Parsing/Grammar.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Parsing/Grammar.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Parsing/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Parsing/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Parsing/Production.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Parsing/Production.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Parsing/Tree.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Parsing/Tree.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Grammar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Grammar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Production.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Production.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +68,7 @@
       <updated>1605624503669</updated>
       <workItem from="1605624508072" duration="5411000" />
       <workItem from="1606037812446" duration="24000" />
-      <workItem from="1606128691814" duration="3642000" />
+      <workItem from="1606128691814" duration="8914000" />
     </task>
     <servers />
   </component>
@@ -95,26 +88,26 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1700" y="454" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1606037833805" />
-    <state width="1233" height="483" key="GridCell.Tab.0.bottom" timestamp="1606132710374">
+    <state width="1233" height="425" key="GridCell.Tab.0.bottom" timestamp="1606138616421">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="1234" height="398" key="GridCell.Tab.0.bottom/-1920.145.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1605635703556" />
-    <state width="1233" height="483" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1606132710374" />
-    <state width="1233" height="483" key="GridCell.Tab.0.center" timestamp="1606132710374">
+    <state width="1233" height="425" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1606138616421" />
+    <state width="1233" height="425" key="GridCell.Tab.0.center" timestamp="1606138616421">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="1234" height="398" key="GridCell.Tab.0.center/-1920.145.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1605635703555" />
-    <state width="1233" height="483" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1606132710374" />
-    <state width="1233" height="483" key="GridCell.Tab.0.left" timestamp="1606132710374">
+    <state width="1233" height="425" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1606138616421" />
+    <state width="1233" height="425" key="GridCell.Tab.0.left" timestamp="1606138616420">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="1234" height="398" key="GridCell.Tab.0.left/-1920.145.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1605635703554" />
-    <state width="1233" height="483" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1606132710374" />
-    <state width="1233" height="483" key="GridCell.Tab.0.right" timestamp="1606132710374">
+    <state width="1233" height="425" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1606138616420" />
+    <state width="1233" height="425" key="GridCell.Tab.0.right" timestamp="1606138616421">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="1234" height="398" key="GridCell.Tab.0.right/-1920.145.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1605635703555" />
-    <state width="1233" height="483" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1606132710374" />
+    <state width="1233" height="425" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1606138616421" />
     <state x="393" y="425" key="RollbackChangesDialog" timestamp="1605634379463">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
