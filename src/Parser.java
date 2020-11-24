@@ -1,27 +1,24 @@
 import javafx.util.Pair;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Parser {
     //lr(0)
     private Grammar grammar;
     private List<Set<Item>> states;
-    //the state in pos integer goes to set<state> with string
-    private List<Pair<Pair<String,Integer>, Set<Item>>> mapping;
-    //<pos state in states, term/nonterm> --> <pos next state in states, action name>
-    private Map<Pair<Integer,String>,Pair<Integer,String>> action;
-    //pos state in states --> <term/nonterm, pos next state in states>
-    private Map<Integer,List<Goto>> goTo;
+    //pos state in states --> action name
+    private Map<Integer,String> action;
+    //pos state in states --> goto
+    private Map<Integer,Set<Goto>> goTo;
 
     public Parser(Grammar grammar) {
         this.grammar = grammar;
-        mapping = new ArrayList<>();
         action = new HashMap<>();
         goTo = new HashMap<>();
         collectionCanonical();
         System.out.println("The states are: ");
-        mapping.forEach(System.out::println);
         formTable();
          for(int i=0;i<states.size();i++){
             System.out.println(i+"--"+states.get(i));
@@ -100,34 +97,29 @@ public class Parser {
         Set<Item> firstState = getFirstState();
         states = new ArrayList<>();
         states.add(closure(firstState));
-        mapping.add(new Pair<>(new Pair<>("-",0),closure(firstState)));
         int noStates;
         do{
             noStates = states.size();
-            for(int i=0; i<states.size(); i++){
+            for(int i=0; i<states.size(); i++) {
                 Set<Item> s = states.get(i);
-                for(Item a : s){
+                for (Item a : s) {
                     List<String> rhs = a.getRhs();
                     int indexOfDot = rhs.indexOf(".");
-                    if(indexOfDot != rhs.size()-1) {
+                    if (indexOfDot != rhs.size() - 1) {
                         String x = rhs.get(indexOfDot + 1);
                         Set<Item> j = gotoLR(s, x);
-                        Pair p = new Pair<>(new Pair<>(x,i),j);
-                        if(!states.contains(j)) {
+                        Pair p = new Pair<>(new Pair<>(x, i), j);
+                        if (!states.contains(j)) {
                             states.add(j);
                         }
-                        if(!mapping.contains(p)) {
-                            mapping.add(p);
-                            Goto g = new Goto(x,states.indexOf(j));
-                            if (goTo.containsKey(i)) {
-                                goTo.get(i).add(g);
-                            }else {
-                                List<Goto> list = new ArrayList<>();
-                                list.add(g);
-                                goTo.put(i, list);
-                            }
+                        Goto g = new Goto(x, states.indexOf(j));
+                        if (goTo.containsKey(i)) {
+                            goTo.get(i).add(g);
+                        } else {
+                            Set<Goto> list = new HashSet<>();
+                            list.add(g);
+                            goTo.put(i, list);
                         }
-
                     }
                 }
             }
@@ -142,37 +134,43 @@ public class Parser {
 
         for(int i=0;i<states.size();i++) {
             Set<Item> state = states.get(i);
-            AtomicReference<Item> stateWithFinalDot = new AtomicReference<>();
+            AtomicBoolean foundFinal = new AtomicBoolean(false);
+            //find an item with dot on last position in the state
+            AtomicReference<Item> stateWithFinalDot = new AtomicReference<>(new Item("",new ArrayList<>()));
             state.forEach(s->{
-                if(s.getRhs().get(s.getRhs().size() - 1).equals("."))
+                if(s.getRhs().get(s.getRhs().size() - 1).equals(".")) {
+                    if(stateWithFinalDot.get().getLhs().equals("")){
+                        System.out.println("Reduce-reduce error.");
+                    }
                     stateWithFinalDot.set(s);
+                }
+                System.out.println(s.toString()+ acceptanceState.toString() +s.equals(acceptanceState));
+                foundFinal.set(s.equals(acceptanceState));
             });
-            if(stateWithFinalDot.get()!= null && stateWithFinalDot.get()!=acceptanceState) {
-                for (String nonterminal : grammar.getNonTerminals()) {
-                    String actionS = "";
-                    int next = -1;
-                    action.put(new Pair<>(i, nonterminal), new Pair<>(next, "reduce"));
+            if(foundFinal.get()){
+                action.put(i,"accept");
+            }else {
+                //check if it can be reduces
+                if (stateWithFinalDot.get() != null && stateWithFinalDot.get() != acceptanceState) {
+                    for (String nonterminal : grammar.getNonTerminals()) {
+                        String actionS = "";
+                        int next = -1;
+                        action.put(i, "reduce");
+                    }
                 }
             }
-            for(int j=0; j<mapping.size();j++){
-                int positionPrevState = mapping.get(j).getKey().getValue();
-                if(positionPrevState == i) {
-                    String t = mapping.get(j).getKey().getKey();
-                    int positionNextState = states.indexOf(mapping.get(j).getValue());
-                    Set<Item> nextState = mapping.get(i).getValue();
-                    if (nextState.contains(acceptanceState)) {
-                        //accept
-                        action.put(new Pair<>(i, t), new Pair<>(positionNextState, "accept"));
-                        System.out.println("accept");
+            //check for shift
+            for(Item item : state){
+                if(item.getRhs().indexOf(".") != item.getRhs().size()-1){
+                    if(action.get(i)!=null){
+                        System.out.println("Reduce shift conflict.");
+                        return;
+                    }else {
+                        action.put(i, "shift");
                     }
-                    if (grammar.getTerminals().contains(t)) {
-                        //shift to position next state
-                        action.put(new Pair<>(i, t), new Pair<>(positionNextState, "shift"));
-                    }
-
                 }
-
             }
+
         }
     }
 
