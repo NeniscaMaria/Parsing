@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Objects;
 
 public class State {
     //left hand side of prod
@@ -25,5 +26,19 @@ public class State {
                 "lhs='" + lhs + '\'' +
                 ", rhs=" + rhs +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        State state = (State) o;
+        return Objects.equals(lhs, state.lhs) &&
+                Objects.equals(rhs, state.rhs);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lhs, rhs);
     }
 }
