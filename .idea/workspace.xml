@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b2ded880-0247-459c-a7a7-783d1692acf3" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/src/ParseNode.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/ParseTree.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/ParserOutput.java" afterDir="false" />
@@ -13,7 +14,12 @@
       <change beforePath="$PROJECT_DIR$/src/Node.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Tree.java" beforeDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
+>>>>>>> 492cfb8280f4d2d594df5735d4ada29f5fb9ab85
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,6 +54,18 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../MA/crud-project-2020-NeniscaMaria/non-native/react-native" />
   </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
@@ -74,13 +92,32 @@
       <updated>1605624503669</updated>
       <workItem from="1605624508072" duration="5411000" />
       <workItem from="1606037812446" duration="24000" />
+<<<<<<< HEAD
       <workItem from="1606128691814" duration="9987000" />
       <workItem from="1606198600801" duration="13996000" />
+=======
+      <workItem from="1606128691814" duration="9751000" />
+      <workItem from="1606145803275" duration="6693000" />
+      <workItem from="1606210491698" duration="7073000" />
+>>>>>>> 492cfb8280f4d2d594df5735d4ada29f5fb9ab85
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="WindowStateProjectService">
     <state x="1725" y="383" key="#com.intellij.ide.util.MemberChooser" timestamp="1606224433441">
@@ -92,9 +129,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="0" y="125" key="DiffContextDialog/-1920.145.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1605634364800" />
-    <state x="1700" y="454" key="FileChooserDialogImpl" timestamp="1606212212656">
+    <state x="1700" y="454" key="FileChooserDialogImpl" timestamp="1606037833805">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
+<<<<<<< HEAD
     <state x="1700" y="454" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1606212212656" />
     <state width="1233" height="707" key="GridCell.Tab.0.bottom" timestamp="1606225665209">
       <screen x="0" y="0" width="2560" height="1400" />
@@ -116,17 +154,36 @@
     </state>
     <state width="1233" height="707" key="GridCell.Tab.0.right/-1920.145.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1606225665209" />
     <state width="1233" height="441" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1606212148641" />
+=======
+    <state x="1700" y="454" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1606037833805" />
+    <state width="1233" height="425" key="GridCell.Tab.0.bottom" timestamp="1606138616421">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1234" height="398" key="GridCell.Tab.0.bottom/-1920.145.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1605635703556" />
+    <state width="1233" height="425" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1606138616421" />
+    <state width="1233" height="425" key="GridCell.Tab.0.center" timestamp="1606138616421">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1234" height="398" key="GridCell.Tab.0.center/-1920.145.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1605635703555" />
+    <state width="1233" height="425" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1606138616421" />
+    <state width="1233" height="425" key="GridCell.Tab.0.left" timestamp="1606138616420">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1234" height="398" key="GridCell.Tab.0.left/-1920.145.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1605635703554" />
+    <state width="1233" height="425" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1606138616420" />
+    <state width="1233" height="425" key="GridCell.Tab.0.right" timestamp="1606138616421">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1234" height="398" key="GridCell.Tab.0.right/-1920.145.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1605635703555" />
+    <state width="1233" height="425" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1606138616421" />
+>>>>>>> 492cfb8280f4d2d594df5735d4ada29f5fb9ab85
     <state x="393" y="425" key="RollbackChangesDialog" timestamp="1605634379463">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="393" y="425" key="RollbackChangesDialog/-1920.145.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1605634379463" />
-    <state x="1615" y="523" key="com.intellij.ide.util.TipDialog" timestamp="1606198614725">
+    <state x="1615" y="523" key="com.intellij.ide.util.TipDialog" timestamp="1606037812038">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1615" y="523" key="com.intellij.ide.util.TipDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1606198614725" />
-    <state x="1302" y="323" key="new project wizard" timestamp="1606212214611">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="1302" y="323" key="new project wizard/0.0.2560.1400@0.0.2560.1400" timestamp="1606212214611" />
+    <state x="1615" y="523" key="com.intellij.ide.util.TipDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1606037812038" />
   </component>
 </project>

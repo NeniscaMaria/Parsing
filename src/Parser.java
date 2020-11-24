@@ -1,6 +1,6 @@
 import javafx.util.Pair;
-
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Parser {
     //lr(0)
@@ -20,31 +20,38 @@ public class Parser {
 
     //what a state contains
     private Set<State> closure(Set<State> state){
-        List<State> result = new ArrayList<>(state);
-        int size;
-        do{
-            size = result.size();
-            for(int i=0; i<result.size(); i++){
-                State s = result.get(i);
-                int indexDot = s.getRhs().indexOf(".");
-                if(indexDot != s.getRhs().size()-1) {
-                    String b = s.getRhs().get(indexDot + 1);
-                    List<Production> productions = grammar.getProductionsForNonterminal(b);
-                    for(Production p : productions){
-                        for(List<String> rule : p.getRules()) {
-                            List<String> rhs = new ArrayList<>();
-                            rhs.add(".");
-                            rhs.addAll(rule);
-                            State newState = new State(p.getStart(), rhs);
-                            if(!result.contains(newState))
-                                result.add(newState);
+        /* Allocate space for the result. */
+        List<State> setOfStates = new ArrayList<>(state);
+        boolean changed = true;
+        while(changed){ // fixed-point approach to compute closure
+            int oldSize = setOfStates.size();
+            for(int i=0;i<setOfStates.size();i++) {
+                State s = setOfStates.get(i);
+                List<String> rhs = new ArrayList<>(s.getRhs());
+                int indexDot = rhs.indexOf(".");
+
+                if (indexDot != rhs.size() - 1) {
+                    String b =rhs.get(indexDot+1);
+                    List<Production> productions=grammar.getProductionsForNonterminal(b);
+
+                    for (int j = 0; j < productions.size(); j++) {
+                        Production currentProduction = productions.get(j);
+                        for(List<String> rule : currentProduction.getRules()){
+                            List<String> newRhs = new ArrayList<>();
+                            newRhs.add(".");
+                            newRhs.addAll(rule);
+                            State newState=new State(currentProduction.getStart(),newRhs);
+                            if(!setOfStates.contains(newState))
+                                setOfStates.add(newState);
                         }
                     }
                 }
             }
-        }while(size != result.size());
-        return Set.copyOf(result);
+            changed = (setOfStates.size() != oldSize);
+        }
+        return Set.copyOf(setOfStates);
     }
+
 
     //how to move from a state to another
     private Set<State> gotoLR(Set<State> s, String x){
@@ -77,33 +84,43 @@ public class Parser {
         return ss;
     }
 
+    private boolean checkLR0(Set<State> s){
+        Set<String> last = new HashSet<>();
+        AtomicBoolean result = new AtomicBoolean(true);
+        s.forEach(ss->{
+            if(ss.getRhs().indexOf(".") == ss.getRhs().size())
+                if(!last.add(ss.getRhs().get(ss.getRhs().size()-1)))
+                    result.set(false);
+        });
+        return result.get();
+    }
+
     //construct set of states
-    private void collectionCanonical(){
+    private boolean collectionCanonical(){
         Set<State> firstState = getFirstState();
-        states = new ArrayList<>();
+        states = new HashSet<>();
         states.add(closure(firstState));
         mapping.add(new Pair<>(new Pair<>("-",0),closure(firstState)));
         int noStates;
+        boolean isLR0 = true;
         do{
             noStates = states.size();
-            for(int i=0; i<states.size(); i++){
-                Set<State> s = states.get(i);
+            for(Set<State> s : states){
+                isLR0 = checkLR0(s);
                 for(State a : s){
                     List<String> rhs = a.getRhs();
                     int indexOfDot = rhs.indexOf(".");
-                    if(indexOfDot != rhs.size()-1) {
+                    if(indexOfDot != rhs.size()) {
                         String x = rhs.get(indexOfDot + 1);
                         Set<State> j = gotoLR(s, x);
-                        Pair p = new Pair<>(new Pair<>(x,i),j);
-                        if(!mapping.contains(p))
-                            mapping.add(p);
                         if(!states.contains(j)) {
                             states.add(j);
                         }
                     }
                 }
             }
-        }while(noStates != states.size());
+        }while(noStates != states.size() && isLR0);
+        return isLR0;
     }
 
 }
