@@ -1,8 +1,8 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import static java.lang.Character.isUpperCase;
+
 
 public class Parser {
     //lr(0)
@@ -18,8 +18,39 @@ public class Parser {
 
     //what a state contains
     private Set<State> closure(Set<State> state){
-        return new HashSet<>();
+        /* Allocate space for the result. */
+        List<State> setOfStates = new ArrayList<>(state);
+        boolean changed = true;
+        while(changed){ // fixed-point approach to compute closure
+            int oldSize = setOfStates.size();
+            for(int i=0;i<setOfStates.size();i++) {
+                State s = setOfStates.get(i);
+                List<String> rhs = new ArrayList<>(s.getRhs());
+                int indexDot = rhs.indexOf(".");
+
+                if (indexDot != rhs.size() - 1) {
+                    String b =rhs.get(indexDot+1);
+                    List<Production> productions=grammar.getProductionsForNonterminal(b);
+
+                    for (int j = 0; j < productions.size(); j++) {
+                        Production currentProduction = productions.get(j);
+                        for(List<String> rule : currentProduction.getRules()){
+                            List<String> newRhs = new ArrayList<>();
+                            newRhs.add(".");
+                            newRhs.addAll(rule);
+                            State newState=new State(currentProduction.getStart(),newRhs);
+                            if(!setOfStates.contains(newState))
+                                setOfStates.add(newState);
+
+                        }
+                    }
+                }
+            }
+            changed = (setOfStates.size() != oldSize);
+        }
+        return Set.copyOf(setOfStates);
     }
+
 
     //how to move from a state to another
     private Set<State> gotoLR(Set<State> s, String x){
