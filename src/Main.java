@@ -26,18 +26,18 @@ public class Main {
     }
     public static void main(String[] args) {
         //treeCheck();
-        Grammar grammar = new Grammar("g2.txt");
+        Grammar grammar = new Grammar("g1.txt");
         Parser parser = new Parser(grammar);
-        boolean finsihed = false;
+        boolean finished = false;
         Scanner console = new Scanner(System.in);
-        while(!finsihed){
+        while(!finished){
             showMenu();
             System.out.println(">>");
 
             int choice = console.nextInt();
             switch (choice){
                 case 0:
-                    finsihed=true;
+                    finished=true;
                     break;
                 case 1:
                     System.out.println(grammar.getNonTerminals());
