@@ -1,5 +1,6 @@
-S E V
-x y +
-S - E
-E - E + V | V
-V - x | y
+S' S A
+a b c
+S' - S
+S - a A
+A - b A
+A - c

@@ -126,6 +126,33 @@ public class Parser {
         }while(noStates != states.size());
     }
 
+    private boolean checkReduceReduceConflict(Set<Item> state){
+        AtomicBoolean doubleDot = new AtomicBoolean(false);
+        AtomicBoolean dotFinal = new AtomicBoolean(false);
+        state.forEach(item->{
+            List<String> rhs = item.getRhs();
+            if(rhs.indexOf(".") == rhs.size()-1)
+                if(dotFinal.get())
+                    doubleDot.set(true);
+                else
+                    dotFinal.set(true);
+        });
+        return doubleDot.get();
+    }
+
+    private boolean checkReduceShiftConflict(Set<Item> state){
+        AtomicBoolean dotInFound = new AtomicBoolean(false);
+        AtomicBoolean dotFinal = new AtomicBoolean(false);
+        state.forEach(item->{
+            List<String> rhs = item.getRhs();
+            if(rhs.indexOf(".") == rhs.size()-1)
+                dotFinal.set(true);
+            else
+                dotInFound.set(true);
+        });
+        return dotFinal.get() && dotInFound.get();
+    }
+
     private void formTable(){
         Production firstProduction = grammar.getProductions().get(0);
         List<String> rhs = new ArrayList<>(firstProduction.getRules().get(0));
@@ -134,6 +161,15 @@ public class Parser {
 
         for(int i=0;i<states.size();i++) {
             Set<Item> state = states.get(i);
+
+            if(checkReduceReduceConflict(state)){
+                System.out.println("Reduce-reduce error "+state.toString());
+                return;
+            }
+            if(checkReduceShiftConflict(state)){
+                System.out.println("Reduce-shift error "+state.toString());
+                return;
+            }
             AtomicBoolean foundFinal = new AtomicBoolean(false);
             //find an item with dot on last position in the state
             AtomicReference<Item> stateWithFinalDot = new AtomicReference<>(new Item("",new ArrayList<>()));
@@ -161,13 +197,8 @@ public class Parser {
             }
             //check for shift
             for(Item item : state){
-                if(item.getRhs().indexOf(".") != item.getRhs().size()-1){
-                    if(action.get(i)!=null){
-                        System.out.println("Reduce shift conflict.");
-                        return;
-                    }else {
-                        action.put(i, "shift");
-                    }
+                if(item.getRhs().indexOf(".") != item.getRhs().size()-1) {
+                    action.put(i, "shift");
                 }
             }
 
