@@ -27,9 +27,9 @@ public class Grammar {
                     String[] tokens = line.split(" ");
                     for (String token : tokens) {
                         if (i == 0)
-                            nonTerminals.add(token);
-                        if (i == 1)
                             terminals.add(token);
+                        if (i == 1)
+                            nonTerminals.add(token);
                     }
                 }
 

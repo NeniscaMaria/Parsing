@@ -1,32 +1,43 @@
 import javafx.util.Pair;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Parser {
     //lr(0)
     private Grammar grammar;
-    private List<Set<State>> states;
-    //the state in pos integer goes to set<state> with string
-    private List<Pair<Pair<String,Integer>, Set<State>>> mapping;
+    private List<Set<Item>> states;
+    //pos state in states --> action name
+    private Map<Integer,String> action;
+    //pos state in states --> goto
+    private Map<Integer,Set<Goto>> goTo;
 
     public Parser(Grammar grammar) {
         this.grammar = grammar;
-        mapping = new ArrayList<>();
+        action = new HashMap<>();
+        goTo = new HashMap<>();
         collectionCanonical();
         System.out.println("The states are: ");
-        //states.forEach(System.out::println);
-        mapping.forEach(System.out::println);
+        formTable();
+         for(int i=0;i<states.size();i++){
+            System.out.println(i+"--"+states.get(i));
+        }
+        System.out.println("action=========");
+        System.out.println(action);
+        System.out.println("goto==========");
+        goTo.forEach((k,v)-> System.out.println(k+"---"+v));
     }
 
     //what a state contains
-    private Set<State> closure(Set<State> state){
+    private Set<Item> closure(Set<Item> state){
         /* Allocate space for the result. */
-        List<State> setOfStates = new ArrayList<>(state);
+        List<Item> setOfStates = new ArrayList<>(state);
         boolean changed = true;
         while(changed){ // fixed-point approach to compute closure
             int oldSize = setOfStates.size();
             for(int i=0;i<setOfStates.size();i++) {
-                State s = setOfStates.get(i);
+                Item s = setOfStates.get(i);
                 List<String> rhs = new ArrayList<>(s.getRhs());
                 int indexDot = rhs.indexOf(".");
                 if (indexDot != rhs.size() - 1) {
@@ -38,7 +49,7 @@ public class Parser {
                             List<String> newRhs = new ArrayList<>();
                             newRhs.add(".");
                             newRhs.addAll(rule);
-                            State newState=new State(currentProduction.getStart(),newRhs);
+                            Item newState=new Item(currentProduction.getStart(),newRhs);
                             if(!setOfStates.contains(newState))
                                 setOfStates.add(newState);
                         }
@@ -51,17 +62,17 @@ public class Parser {
     }
 
     //how to move from a state to another
-    private Set<State> gotoLR(Set<State> s, String x){
-        Set<State> nextStates = new HashSet<>();
+    private Set<Item> gotoLR(Set<Item> s, String x){
+        Set<Item> nextStates = new HashSet<>();
         if(!s.isEmpty()){
-            for(State state : s){
+            for(Item state : s){
                 if(state.getRhs().contains(x)) {
                     List<String> rhs = new ArrayList<>(state.getRhs());
                     int indexDot = rhs.indexOf(".");
                     if(indexDot + 1 == rhs.indexOf(x)) {
                         rhs.remove(indexDot);
                         rhs.add(indexDot + 1, ".");
-                        nextStates.add(new State(state.getLhs(), rhs));
+                        nextStates.add(new Item(state.getLhs(), rhs));
                     }
                 }
             }
@@ -70,44 +81,97 @@ public class Parser {
         return nextStates;
     }
 
-    private Set<State> getFirstState(){
+    private Set<Item> getFirstState(){
         Production firstProduction = grammar.getProductions().get(0);
         List<String> rhs = new ArrayList<>();
         rhs.add(".");
         rhs.addAll(firstProduction.getRules().get(0));
-        State firstState = new State(firstProduction.getStart(), rhs);
-        Set<State> ss = new HashSet<>();
+        Item firstState = new Item(firstProduction.getStart(), rhs);
+        Set<Item> ss = new HashSet<>();
         ss.add(firstState);
         return ss;
     }
 
     //construct set of states
     private void collectionCanonical(){
-        Set<State> firstState = getFirstState();
+        Set<Item> firstState = getFirstState();
         states = new ArrayList<>();
         states.add(closure(firstState));
-        mapping.add(new Pair<>(new Pair<>("-",0),closure(firstState)));
         int noStates;
         do{
             noStates = states.size();
-            for(int i=0; i<states.size(); i++){
-                Set<State> s = states.get(i);
-                for(State a : s){
+            for(int i=0; i<states.size(); i++) {
+                Set<Item> s = states.get(i);
+                for (Item a : s) {
                     List<String> rhs = a.getRhs();
                     int indexOfDot = rhs.indexOf(".");
-                    if(indexOfDot != rhs.size()-1) {
+                    if (indexOfDot != rhs.size() - 1) {
                         String x = rhs.get(indexOfDot + 1);
-                        Set<State> j = gotoLR(s, x);
-                        Pair p = new Pair<>(new Pair<>(x,i),j);
-                        if(!mapping.contains(p))
-                            mapping.add(p);
-                        if(!states.contains(j)) {
+                        Set<Item> j = gotoLR(s, x);
+                        Pair p = new Pair<>(new Pair<>(x, i), j);
+                        if (!states.contains(j)) {
                             states.add(j);
+                        }
+                        Goto g = new Goto(x, states.indexOf(j));
+                        if (goTo.containsKey(i)) {
+                            goTo.get(i).add(g);
+                        } else {
+                            Set<Goto> list = new HashSet<>();
+                            list.add(g);
+                            goTo.put(i, list);
                         }
                     }
                 }
             }
         }while(noStates != states.size());
+    }
+
+    private void formTable(){
+        Production firstProduction = grammar.getProductions().get(0);
+        List<String> rhs = new ArrayList<>(firstProduction.getRules().get(0));
+        rhs.add(".");
+        Item acceptanceState = new Item(firstProduction.getStart(), rhs);
+
+        for(int i=0;i<states.size();i++) {
+            Set<Item> state = states.get(i);
+            AtomicBoolean foundFinal = new AtomicBoolean(false);
+            //find an item with dot on last position in the state
+            AtomicReference<Item> stateWithFinalDot = new AtomicReference<>(new Item("",new ArrayList<>()));
+            state.forEach(s->{
+                if(s.getRhs().get(s.getRhs().size() - 1).equals(".")) {
+                    if(stateWithFinalDot.get().getLhs().equals("")){
+                        System.out.println("Reduce-reduce error.");
+                    }
+                    stateWithFinalDot.set(s);
+                }
+                System.out.println(s.toString()+ acceptanceState.toString() +s.equals(acceptanceState));
+                foundFinal.set(s.equals(acceptanceState));
+            });
+            if(foundFinal.get()){
+                action.put(i,"accept");
+            }else {
+                //check if it can be reduces
+                if (stateWithFinalDot.get() != null && stateWithFinalDot.get() != acceptanceState) {
+                    for (String nonterminal : grammar.getNonTerminals()) {
+                        String actionS = "";
+                        int next = -1;
+                        action.put(i, "reduce");
+                    }
+                }
+            }
+            //check for shift
+            for(Item item : state){
+                if(item.getRhs().indexOf(".") != item.getRhs().size()-1){
+                    if(action.get(i)!=null){
+                        System.out.println("Reduce shift conflict.");
+                        return;
+                    }else {
+                        action.put(i, "shift");
+                    }
+                }
+            }
+
+        }
     }
 
 }
