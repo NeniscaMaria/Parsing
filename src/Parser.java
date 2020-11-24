@@ -1,6 +1,6 @@
 import javafx.util.Pair;
+
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Parser {
     //lr(0)
@@ -29,11 +29,9 @@ public class Parser {
                 State s = setOfStates.get(i);
                 List<String> rhs = new ArrayList<>(s.getRhs());
                 int indexDot = rhs.indexOf(".");
-
                 if (indexDot != rhs.size() - 1) {
                     String b =rhs.get(indexDot+1);
                     List<Production> productions=grammar.getProductionsForNonterminal(b);
-
                     for (int j = 0; j < productions.size(); j++) {
                         Production currentProduction = productions.get(j);
                         for(List<String> rule : currentProduction.getRules()){
@@ -51,7 +49,6 @@ public class Parser {
         }
         return Set.copyOf(setOfStates);
     }
-
 
     //how to move from a state to another
     private Set<State> gotoLR(Set<State> s, String x){
@@ -84,43 +81,33 @@ public class Parser {
         return ss;
     }
 
-    private boolean checkLR0(Set<State> s){
-        Set<String> last = new HashSet<>();
-        AtomicBoolean result = new AtomicBoolean(true);
-        s.forEach(ss->{
-            if(ss.getRhs().indexOf(".") == ss.getRhs().size())
-                if(!last.add(ss.getRhs().get(ss.getRhs().size()-1)))
-                    result.set(false);
-        });
-        return result.get();
-    }
-
     //construct set of states
-    private boolean collectionCanonical(){
+    private void collectionCanonical(){
         Set<State> firstState = getFirstState();
-        states = new HashSet<>();
+        states = new ArrayList<>();
         states.add(closure(firstState));
         mapping.add(new Pair<>(new Pair<>("-",0),closure(firstState)));
         int noStates;
-        boolean isLR0 = true;
         do{
             noStates = states.size();
-            for(Set<State> s : states){
-                isLR0 = checkLR0(s);
+            for(int i=0; i<states.size(); i++){
+                Set<State> s = states.get(i);
                 for(State a : s){
                     List<String> rhs = a.getRhs();
                     int indexOfDot = rhs.indexOf(".");
-                    if(indexOfDot != rhs.size()) {
+                    if(indexOfDot != rhs.size()-1) {
                         String x = rhs.get(indexOfDot + 1);
                         Set<State> j = gotoLR(s, x);
+                        Pair p = new Pair<>(new Pair<>(x,i),j);
+                        if(!mapping.contains(p))
+                            mapping.add(p);
                         if(!states.contains(j)) {
                             states.add(j);
                         }
                     }
                 }
             }
-        }while(noStates != states.size() && isLR0);
-        return isLR0;
+        }while(noStates != states.size());
     }
 
 }
