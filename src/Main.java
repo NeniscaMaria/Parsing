@@ -27,7 +27,7 @@ public class Main {
     }
     public static void main(String[] args) {
         //treeCheck();
-        Grammar grammar = new Grammar("g2.txt");
+        Grammar grammar = new Grammar("g1.txt");
         Parser parser = new Parser(grammar);
         ParserOutput parserOutput = new ParserOutput(parser);
         boolean finished = false;

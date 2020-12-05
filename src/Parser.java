@@ -3,12 +3,15 @@ import javafx.util.Pair;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 public class Parser {
     //lr(0)
     private Grammar grammar;
     private List<Set<Item>> states;
     //pos state in states --> action name
+    //for reduce the action name is of the form:
+    //reduce,position in all productions from grammar,position in rules of production
     private Map<Integer,String> action;
     //pos state in states --> goto
     private Map<Integer,Set<Goto>> goTo;
@@ -188,11 +191,31 @@ public class Parser {
                 //check if it can be reduced: there is a state with dot at the end
                 // and the state is different from the acceptance state
                 if (stateWithFinalDot.get() != null && stateWithFinalDot.get() != acceptanceState) {
-                    //TODO: find the production
-                    for (String nonTerminal : grammar.getNonTerminals()) {
-                        String actionS = "";
-                        int next = -1;
-                        action.put(i, "reduce");
+                    String start = stateWithFinalDot.get().getLhs();
+                    List<String> rightHandSide = new ArrayList<>(stateWithFinalDot.get().getRhs());
+                    if(rightHandSide.size() > 0) {
+                        rightHandSide.remove(rightHandSide.size() - 1);
+                        List<Production> productionsFromStart = grammar.getProductionsForNonterminal(start);
+
+                        //we get the right production from all the productions starting with start
+                        Production production = productionsFromStart.stream()
+                                .filter(p-> p.getRules().get(0).equals(rightHandSide))
+                                .collect(Collectors.toList()).get(0);
+
+                        //we get the index at which this production is in the list of all productions
+                        List<Production> allProductions = grammar.getProductions();
+                        int positionInAllProductions = allProductions.indexOf(production);
+
+                        //we search for the position of teh rule in the list of rules of the production
+                        int positionInRules = -1;
+                        List<List<String>> rules = allProductions.get(positionInAllProductions).getRules();
+                        for(int j=0;j<rules.size();j++)
+                            if(rules.get(j).equals(rightHandSide))
+                                positionInRules = j;
+
+                        //built the action name
+                        String actionToAdd = "reduce"+","+positionInAllProductions+","+positionInRules;
+                        action.put(i, actionToAdd);
                     }
                 }
             }
