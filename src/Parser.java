@@ -18,8 +18,8 @@ public class Parser {
         action = new HashMap<>();
         goTo = new HashMap<>();
         collectionCanonical();
-        System.out.println("The states are: ");
         formTable();
+        System.out.println("The states are: ");
          for(int i=0;i<states.size();i++){
             System.out.println(i+"--"+states.get(i));
         }
@@ -127,6 +127,7 @@ public class Parser {
     }
 
     private boolean checkReduceReduceConflict(Set<Item> state){
+        //if there are 2 states with dot at the end
         AtomicBoolean doubleDot = new AtomicBoolean(false);
         AtomicBoolean dotFinal = new AtomicBoolean(false);
         state.forEach(item->{
@@ -141,6 +142,7 @@ public class Parser {
     }
 
     private boolean checkReduceShiftConflict(Set<Item> state){
+        //if thre are 2 states: one with dot in the end and one with dot inside
         AtomicBoolean dotInFound = new AtomicBoolean(false);
         AtomicBoolean dotFinal = new AtomicBoolean(false);
         state.forEach(item->{
@@ -157,11 +159,12 @@ public class Parser {
         Production firstProduction = grammar.getProductions().get(0);
         List<String> rhs = new ArrayList<>(firstProduction.getRules().get(0));
         rhs.add(".");
+        //get the acceptance state
         Item acceptanceState = new Item(firstProduction.getStart(), rhs);
 
         for(int i=0;i<states.size();i++) {
             Set<Item> state = states.get(i);
-
+            //check for conflicts
             if(checkReduceReduceConflict(state)){
                 System.out.println("Reduce-reduce error "+state.toString());
                 return;
@@ -171,31 +174,29 @@ public class Parser {
                 return;
             }
             AtomicBoolean foundFinal = new AtomicBoolean(false);
-            //find an item with dot on last position in the state
+            //find an item with dot on last position in the state => reduce
             AtomicReference<Item> stateWithFinalDot = new AtomicReference<>(new Item("",new ArrayList<>()));
             state.forEach(s->{
-                if(s.getRhs().get(s.getRhs().size() - 1).equals(".")) {
-                    if(stateWithFinalDot.get().getLhs().equals("")){
-                        System.out.println("Reduce-reduce error.");
-                    }
+                if(s.getRhs().get(s.getRhs().size() - 1).equals("."))
                     stateWithFinalDot.set(s);
-                }
-                System.out.println(s.toString()+ acceptanceState.toString() +s.equals(acceptanceState));
                 foundFinal.set(s.equals(acceptanceState));
             });
+            //if we found the acceptance state => accept
             if(foundFinal.get()){
                 action.put(i,"accept");
             }else {
-                //check if it can be reduces
+                //check if it can be reduced: there is a state with dot at the end
+                // and the state is different from the acceptance state
                 if (stateWithFinalDot.get() != null && stateWithFinalDot.get() != acceptanceState) {
-                    for (String nonterminal : grammar.getNonTerminals()) {
+                    //TODO: find the production
+                    for (String nonTerminal : grammar.getNonTerminals()) {
                         String actionS = "";
                         int next = -1;
                         action.put(i, "reduce");
                     }
                 }
             }
-            //check for shift
+            //check for shift: the dot is not at the end
             for(Item item : state){
                 if(item.getRhs().indexOf(".") != item.getRhs().size()-1) {
                     action.put(i, "shift");
