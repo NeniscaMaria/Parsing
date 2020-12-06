@@ -29,7 +29,6 @@ public class Main {
         //treeCheck();
         Grammar grammar = new Grammar("g1.txt");
         Parser parser = new Parser(grammar);
-        ParserOutput parserOutput = new ParserOutput(parser);
         boolean finished = false;
         Scanner console = new Scanner(System.in);
         while(!finished){
