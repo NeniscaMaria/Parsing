@@ -83,4 +83,9 @@ public class Grammar {
                 productions.toString() + ") ";
 
     }
+
+    public Item getProduction(int posInProds, int posInRules){
+        List<String> rhs =  productions.get(posInProds).getRules().get(posInRules);
+        return new Item(productions.get(posInProds).getStart(), rhs);
+    }
 }

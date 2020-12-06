@@ -29,6 +29,8 @@ public class Main {
         //treeCheck();
         Grammar grammar = new Grammar("g1.txt");
         Parser parser = new Parser(grammar);
+        ParseOutput parseOutput = new ParseOutput(parser,grammar);
+        ParseTree tree = parseOutput.parse("a b c");
         boolean finished = false;
         Scanner console = new Scanner(System.in);
         while(!finished){

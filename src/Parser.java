@@ -84,7 +84,7 @@ public class Parser {
         return nextStates;
     }
 
-    private Set<Item> getFirstState(){
+    public Set<Item> getFirstState(){
         Production firstProduction = grammar.getProductions().get(0);
         List<String> rhs = new ArrayList<>();
         rhs.add(".");
@@ -95,6 +95,9 @@ public class Parser {
         return ss;
     }
 
+    public Set<Item> getStartState(){
+        return states.get(0);
+    }
     //construct set of states
     private void collectionCanonical(){
         Set<Item> firstState = getFirstState();
@@ -229,4 +232,24 @@ public class Parser {
         }
     }
 
+    public String getActionOfState(Set<Item> state){
+        for(int i = 0; i<states.size(); i++) {
+            if (states.get(i).equals(state))
+                return action.get(i);
+        }
+        return "Error";
+    }
+
+    public Set<Item> getGoTo(Set<Item> state, String a){
+        for(int i = 0; i<states.size(); i++)
+            if(states.get(i).equals(state)){
+                Set<Goto> goToOfState = goTo.get(i);
+                System.out.println("getGOTO "+a+" "+goToOfState);
+                for(Goto g : goToOfState){
+                    if(g.getTerm().equals(a))
+                        return states.get(g.getStateIndex());
+                }
+            }
+        return null;
+    }
 }
