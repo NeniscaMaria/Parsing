@@ -94,6 +94,7 @@ public class ParseOutput {
                         if (action.equals("Error")) {
                             System.out.println("Error");
                             end = true;
+                            return null;
                         }
                     }
                 }
