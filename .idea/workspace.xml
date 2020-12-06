@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b2ded880-0247-459c-a7a7-783d1692acf3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -79,7 +80,16 @@
       <workItem from="1606037812446" duration="24000" />
       <workItem from="1606128691814" duration="9751000" />
       <workItem from="1606145803275" duration="6693000" />
+      <workItem from="1607276117442" duration="52000" />
     </task>
+    <task id="LOCAL-00001" summary="closure">
+      <created>1606239353273</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1606239353273</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -97,6 +107,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="closure" />
+    <option name="LAST_COMMIT_MESSAGE" value="closure" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1725" y="383" key="#com.intellij.ide.util.MemberChooser" timestamp="1606224433441">
