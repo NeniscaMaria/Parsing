@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +67,12 @@ public class ParseTree {
         return leaves;
     }
 
-    public void writeToFile(String filename){
+    public void writeToFile(String filename) throws IOException {
+        File file = new File(filename);
+        FileWriter fileWriter = new FileWriter(file);
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+        printWriter.print(toString());
+        printWriter.close();
 
     }
     @Override

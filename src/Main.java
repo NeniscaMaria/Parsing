@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -25,7 +26,7 @@ public class Main {
         System.out.println("4.Show production for a nonterminal");
         System.out.println("0.Exit");
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         //treeCheck();
         Grammar grammar = new Grammar("g1.txt");
         Parser parser = new Parser(grammar);
