@@ -22,7 +22,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return "State{" +
+        return "Item{" +
                 "lhs='" + lhs + '\'' +
                 ", rhs=" + rhs +
                 '}';

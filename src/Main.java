@@ -1,5 +1,3 @@
-import org.xml.sax.helpers.ParserAdapter;
-
 import java.util.Scanner;
 
 public class Main {
@@ -13,8 +11,8 @@ public class Main {
         int pos4 = parseTree.addSibling("S",pos3);
         int pos5 = parseTree.addChild("a",pos2);
         int pos6 = parseTree.addSibling("S",pos5);
-        int pos7 = parseTree.addChild("c",pos4);
-        int pos8 = parseTree.addChild("c",pos6);
+        parseTree.addChild("c",pos4);
+        parseTree.addChild("c",pos6);
         System.out.println(parseTree);
         System.out.println(parseTree.getLeaves(parseTree.getRoot()));
 }
@@ -28,10 +26,13 @@ public class Main {
         System.out.println("0.Exit");
     }
     public static void main(String[] args) {
-        treeCheck();
-        Grammar grammar = new Grammar("g2.txt");
+        //treeCheck();
+        Grammar grammar = new Grammar("g1.txt");
         Parser parser = new Parser(grammar);
-        ParserOutput parserOutput = new ParserOutput(parser);
+        ParseOutput parseOutput = new ParseOutput(parser,grammar);
+        ParseTree tree = parseOutput.parse("a b c");
+        System.out.println(tree);
+        tree.writeToFile("out.txt");
         boolean finished = false;
         Scanner console = new Scanner(System.in);
         while(!finished){

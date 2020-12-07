@@ -30,4 +30,12 @@ public class Goto {
     public int hashCode() {
         return Objects.hash(term, stateIndex);
     }
+
+    public String getTerm() {
+        return term;
+    }
+
+    public Integer getStateIndex() {
+        return stateIndex;
+    }
 }

@@ -2,8 +2,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Grammar {
     private List<String> nonTerminals;
@@ -27,9 +25,9 @@ public class Grammar {
                     String[] tokens = line.split(" ");
                     for (String token : tokens) {
                         if (i == 0)
-                            terminals.add(token);
-                        if (i == 1)
                             nonTerminals.add(token);
+                        if (i == 1)
+                            terminals.add(token);
                     }
                 }
 
@@ -84,5 +82,10 @@ public class Grammar {
         return "G =( " + nonTerminals.toString() + ", " + terminals.toString() + ", " +
                 productions.toString() + ") ";
 
+    }
+
+    public Item getProduction(int posInProds, int posInRules){
+        List<String> rhs =  productions.get(posInProds).getRules().get(posInRules);
+        return new Item(productions.get(posInProds).getStart(), rhs);
     }
 }
