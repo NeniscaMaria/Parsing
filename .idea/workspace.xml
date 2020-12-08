@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b2ded880-0247-459c-a7a7-783d1692acf3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Parsing/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Parsing/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/g2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/g2.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -81,6 +81,7 @@
       <workItem from="1606128691814" duration="9751000" />
       <workItem from="1606145803275" duration="6693000" />
       <workItem from="1607276117442" duration="52000" />
+      <workItem from="1607428482492" duration="4461000" />
     </task>
     <task id="LOCAL-00001" summary="closure">
       <created>1606239353273</created>
@@ -96,7 +97,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607362955682</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="closure">
+      <created>1607428550507</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1607428550507</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
