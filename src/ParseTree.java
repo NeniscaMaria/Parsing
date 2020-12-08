@@ -35,8 +35,9 @@ public class ParseTree {
         int position = table.indexOf(node);
         boolean foundChildren = false;
         for (int i = 0; i < table.size() && !foundChildren; i++) {
-            if (table.get(i).getFather() == position)
+            if (table.get(i).getFather() == position) {
                 foundChildren = true;
+            }
         }
         return foundChildren;
     }

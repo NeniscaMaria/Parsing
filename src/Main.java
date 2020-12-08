@@ -31,10 +31,11 @@ public class Main {
         Grammar grammar = new Grammar("g1.txt");
         Parser parser = new Parser(grammar);
         ParseOutput parseOutput = new ParseOutput(parser,grammar);
-        ParseTree tree = parseOutput.parse("a b b b");
-        System.out.println(tree);
-        if(tree!=null)
+        ParseTree tree = parseOutput.parse("a b c");
+        if(tree!=null){
+            System.out.println(tree);
             tree.writeToFile("out.txt");
+        }
         boolean finished = false;
         Scanner console = new Scanner(System.in);
         while(!finished){

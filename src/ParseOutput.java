@@ -60,7 +60,7 @@ public class ParseOutput {
         Collections.reverse(inputs);
         inputStack.push("$");
         inputs.forEach(input -> inputStack.push(input));
-
+        String previousInput = "";
         Set<Item> currentState = startState;
         boolean end = false;
         while (!end) {
@@ -69,8 +69,17 @@ public class ParseOutput {
 
             if (action.equals("shift")) {
                 String a = inputStack.pop();
+                if(a.contains("$")){
+                    System.out.println("Error: could not resolve "+previousInput+" at position "+(sequence.split(" ").length-inputStack.size()));
+                    return null;
+                }
                 currentState = parser.getGoTo(currentState, a);
+                if(currentState == null){
+                    System.out.println("Error: could not resolve "+a+" at position "+(sequence.split(" ").length-inputStack.size()));
+                    return null;
+                }
                 workingStack.push(new Pair<>(a, currentState));
+                previousInput = a;
                 System.out.println(a + " " + currentState);
                 System.out.println("=====================================================");
             } else {
@@ -88,12 +97,16 @@ public class ParseOutput {
                     System.out.println("=====================================================");
                 } else {
                     if (action.equals("accept")) {
-                        System.out.println("Success!");
-                        end = true;
+                        if(inputStack.peek().equals("$")) {
+                            System.out.println("Success!");
+                            end = true;
+                        }else{
+                            System.out.println("Error: could not resolve "+inputStack.pop()+" at position "+(sequence.split(" ").length-inputStack.size()));
+                            return null;
+                        }
                     } else {
                         if (action.equals("Error")) {
                             System.out.println("Error");
-                            end = true;
                             return null;
                         }
                     }
