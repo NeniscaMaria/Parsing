@@ -32,8 +32,10 @@ public class Main {
         Parser parser = new Parser(grammar);
         ParseOutput parseOutput = new ParseOutput(parser,grammar);
         ParseTree tree = parseOutput.parse("a b c");
-        System.out.println(tree);
-        tree.writeToFile("out.txt");
+        if(tree!=null){
+            System.out.println(tree);
+            tree.writeToFile("out.txt");
+        }
         boolean finished = false;
         Scanner console = new Scanner(System.in);
         while(!finished){
