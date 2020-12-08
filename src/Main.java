@@ -24,18 +24,13 @@ public class Main {
         System.out.println("2.Show set of terminals");
         System.out.println("3.Show set of productions");
         System.out.println("4.Show production for a nonterminal");
+        System.out.println("5.See grammar from seminar");
+        System.out.println("6. See custom grammar");
         System.out.println("0.Exit");
     }
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         //treeCheck();
         Grammar grammar = new Grammar("g1.txt");
-        Parser parser = new Parser(grammar);
-        ParseOutput parseOutput = new ParseOutput(parser,grammar);
-        ParseTree tree = parseOutput.parse("a b c");
-        if(tree!=null){
-            System.out.println(tree);
-            tree.writeToFile("out.txt");
-        }
         boolean finished = false;
         Scanner console = new Scanner(System.in);
         while(!finished){
@@ -60,6 +55,26 @@ public class Main {
                     console.nextLine();
                     String nonterminal = console.nextLine();
                     System.out.println(grammar.getProductionsContainingNonterminal(nonterminal));
+                    break;
+                case 5:
+                    Parser parser = new Parser(grammar);
+                    ParseOutput parseOutput = new ParseOutput(parser,grammar);
+                    ParseTree tree = parseOutput.parse("a b c");
+                    if(tree!=null){
+                        System.out.println(tree);
+                        tree.writeToFile("out.txt");
+                    }
+                    break;
+                case 6:
+                    grammar = new Grammar("g2.txt");
+                    parser = new Parser(grammar);
+                    parseOutput = new ParseOutput(parser,grammar);
+                    PIF pif = new PIF("PIF1.out");
+                    tree = parseOutput.parse(pif.getCodes());
+                    if(tree!=null){
+                        System.out.println(tree);
+                        tree.writeToFile("out.txt");
+                    }
                     break;
                 default:
                     System.out.println("Wrong command");

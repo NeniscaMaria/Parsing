@@ -16,7 +16,7 @@ public class Parser {
     //pos state in states --> goto
     private Map<Integer,Set<Goto>> goTo;
 
-    public Parser(Grammar grammar) {
+    public Parser(Grammar grammar) throws Exception {
         this.grammar = grammar;
         action = new HashMap<>();
         goTo = new HashMap<>();
@@ -161,23 +161,22 @@ public class Parser {
         return dotFinal.get() && dotInFound.get();
     }
 
-    private void formTable(){
+    private void formTable() throws Exception {
         Production firstProduction = grammar.getProductions().get(0);
         List<String> rhs = new ArrayList<>(firstProduction.getRules().get(0));
         rhs.add(".");
         //get the acceptance state
         Item acceptanceState = new Item(firstProduction.getStart(), rhs);
-
         for(int i=0;i<states.size();i++) {
             Set<Item> state = states.get(i);
             //check for conflicts
             if(checkReduceReduceConflict(state)){
-                System.out.println("Reduce-reduce error "+state.toString());
-                return;
+                System.out.println(state.toString());
+                throw new Exception("Reduce-reduce error "+state.toString());
             }
             if(checkReduceShiftConflict(state)){
-                System.out.println("Reduce-shift error "+state.toString());
-                return;
+                System.out.println(state.toString());
+                throw new Exception("Reduce-shift error "+state.toString());
             }
             AtomicBoolean foundFinal = new AtomicBoolean(false);
             //find an item with dot on last position in the state => reduce
@@ -199,10 +198,11 @@ public class Parser {
                     if(rightHandSide.size() > 0) {
                         rightHandSide.remove(rightHandSide.size() - 1);
                         List<Production> productionsFromStart = grammar.getProductionsForNonterminal(start);
-
+                        System.out.println(start+" "+rightHandSide);
+                        System.out.println(productionsFromStart);
                         //we get the right production from all the productions starting with start
                         Production production = productionsFromStart.stream()
-                                .filter(p-> p.getRules().get(0).equals(rightHandSide))
+                                .filter(p-> p.getRules().contains(rightHandSide))
                                 .collect(Collectors.toList()).get(0);
 
                         //we get the index at which this production is in the list of all productions
