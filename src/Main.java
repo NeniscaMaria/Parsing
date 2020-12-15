@@ -25,7 +25,7 @@ public class Main {
         System.out.println("3.Show set of productions");
         System.out.println("4.Show production for a nonterminal");
         System.out.println("5.See grammar from seminar");
-        System.out.println("6. See custom grammar");
+        System.out.println("6.See custom grammar");
         System.out.println("0.Exit");
     }
     public static void main(String[] args) throws Exception {
